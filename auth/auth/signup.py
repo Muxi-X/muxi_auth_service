@@ -7,14 +7,13 @@
 """
 
 from flask import jsonify, g, request
-from . import api
+from . import auth
 from ..models import User
-from .authentication import auth
 from .. import db
 from werkzeug.security import generate_password_hash
 import base64
 
-@api.route('/signup/', methods=['POST'])
+@auth.route('/signup/', methods=['POST'])
 def signup():
     """用户注册"""
     un = request.get_json().get("username")

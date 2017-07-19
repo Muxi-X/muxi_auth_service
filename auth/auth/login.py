@@ -9,11 +9,11 @@
 """
 
 from flask import jsonify, request
-from . import api
+from . import auth
 from ..models import User
 from .. import db
 
-@api.route('/login/', methods=['POST'])
+@auth.route('/login/', methods=['POST'])
 def login():
     email = request.get_json().get("email")
     pwd = request.get_json().get("password")

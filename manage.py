@@ -34,10 +34,10 @@ project management
 
 import sys
 import os
-from flask.ext.script import Manager, Shell
-from flask.ext.migrate import Migrate, MigrateCommand
-from app import db, app
-from app.models import User, Role
+from flask_script import Manager, Shell
+from flask_migrate import Migrate, MigrateCommand
+from auth import db, app
+from auth.models import User
 
 # 编码设置
 reload(sys)
@@ -106,6 +106,12 @@ def adduser():
     db.session.commit()
     print "<user %s add in database>" % username
 
+@manager.command
+def test() :
+    import unittest
+    tests = unittest.TestLoader().discover('tests')
+    ret = not  unittest.TextTestRunner(verbosity=2).run(tests).wasSuccessful()
+    sys.exit(ret)
 
 if __name__ == '__main__':
     manager.run()

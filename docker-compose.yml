@@ -1,0 +1,12 @@
+#--------------------Auth--------------------
+auth: 
+    build: .  
+    env_file:
+        - Auth.env 
+    command: gunicorn --name auth -b 0.0.0.0:5499 -w 2 wsgi:app 
+    ports: 
+        - "5499:5499" 
+    volumes:
+        - .:/Auth
+    external_links:
+        - auth-mysql:mysql 
