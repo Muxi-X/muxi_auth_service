@@ -13,11 +13,11 @@ from ..models import User
 from .. import db
 import datetime
 
-@auth.route('/show_profile/', methods=['GET'])
+@auth.route('/show_profile/<int:id>/', methods=['GET'])
 @login_required
-def show_profile():
+def show_profile(id):
     """读取用户信息"""
-    ID = g.current_user.id
+    ID = id
     user = User.query.filter_by(id=ID).first()
 
     return jsonify({
@@ -62,4 +62,6 @@ def edit_profile():
     db.session.add(user)
     db.session.commit()
 
-    return jsonify({}) , 200
+    return jsonify({
+            'changed' : ID ,
+        }) , 200
