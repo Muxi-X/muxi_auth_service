@@ -53,7 +53,7 @@ def create_app(config_name=None,main=True) :
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("AUTH_SQL") or "sqlite:///" + os.path.join(basedir, 'data.sqlite')
 
     from .auth import auth
-    app.register_blueprint(auth ,url_prefix='/auth')
+    app.register_blueprint(auth)
     return app
 
 from . import auth
