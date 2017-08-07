@@ -43,7 +43,7 @@ class BasicTestCase(unittest.TestCase) :
                     url_for('auth.login',_external=True),
                     data = json.dumps({
                         "password" : str(number) ,
-                        "email" : str(number)
+                        "username" : str(number)
                         }) ,
                     content_type = 'application/json'
                     )
@@ -54,7 +54,7 @@ class BasicTestCase(unittest.TestCase) :
 
     def test_z_get_profile(self) :
         response = self.client.get(
-                    url_for('auth.show_profile',_external=True) ,
+                    url_for('auth.show_profile',id=1,_external=True) ,
                     headers = {
                         "token" : TOKEN ,
                         "Content_Type" : "application/json"
