@@ -18,6 +18,9 @@ def login():
     username = request.get_json().get("username")
     pwd = request.get_json().get("password")
 
+    if not username or not pwd :
+        return jsonify({}) , 402
+
     user = User.query.filter_by(username=username).first()
     if not user:
         return jsonify({}), 403
@@ -27,5 +30,6 @@ def login():
     token = user.generate_auth_token()
     return jsonify ({
         'token': token,
+        'user_id' : user.id ,
         }), 200
 
