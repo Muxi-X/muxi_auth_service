@@ -7,7 +7,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from config import config
 from flask_moment import Moment
 import os
-from basedir import basedir
+from config import basedir
 
 
 
