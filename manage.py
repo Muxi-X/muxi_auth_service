@@ -37,7 +37,7 @@ import os
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 from auth import db, app
-from auth.models import User
+from auth.models import User , Role
 
 # 编码设置
 reload(sys)

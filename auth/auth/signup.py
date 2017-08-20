@@ -41,3 +41,21 @@ def signup():
     return jsonify({
         "created": user.id
         }), 200
+
+
+@auth.route('/check_name/',methods=['POST'])
+def check_name2() :
+    """检查用户名"""
+    un = request.get_json().get("username")
+    if User.query.filter_by(username=un).first() is not None :
+        return jsonify({ }) , 401
+    return jsonify({ }) , 200
+
+@auth.route('/check_email/',methods=['POST'])
+def check_name() :
+    """检查邮箱"""
+    email = request.get_json().get("email")
+    print email
+    if User.query.filter_by(email=email).first() is not None :
+        return jsonify({ }) , 402
+    return jsonify({ }) , 200
