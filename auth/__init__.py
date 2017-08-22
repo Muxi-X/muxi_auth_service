@@ -21,25 +21,12 @@ config
 """
 
 
-
 db = SQLAlchemy()
 moment = Moment()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 
 
-
-"""
-blueprint
-you can register a <blueprint> by run:
- -- mana blueprint <blueprint>
-under app folder
-""""""
-from main import main
-app.register_blueprint(main, url_prefix='/main')
-from auth import auth
-app.register_blueprint(auth, url_prefix="/auth")
-"""
 def create_app(config_name=None,main=True) :
     if config_name is None :
         config_name = 'default'
