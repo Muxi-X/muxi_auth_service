@@ -12,15 +12,16 @@ from flask import jsonify, request
 from . import auth
 from ..models import User
 from .. import db
+import base64
 
 @auth.route('/login/', methods=['POST'])
 def login():
     username = request.get_json().get("username")
     pwd = request.get_json().get("password")
-
+    pwd = base64.b64decode(pwd)
+    pwd = unicode(pwd)
     if not username or not pwd :
         return jsonify({}) , 402
-
     user = User.query.filter_by(username=username).first()
     if not user:
         return jsonify({}), 403
