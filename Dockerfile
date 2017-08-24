@@ -1,6 +1,5 @@
 FROM python:2.7 
 MAINTAINER Auth 
-
 ENV DEPLOP_PATH /auth 
 RUN mkdir -p $DEPLOP_PATH 
 WORKDIR $DEPLOP_PATH 
