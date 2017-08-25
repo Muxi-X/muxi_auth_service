@@ -6,7 +6,7 @@
     木犀官网注册API
 """
 
-from flask import jsonify, g, request
+from flask import jsonify, g, request , url_for
 from . import auth
 from ..models import User
 from .. import db
@@ -43,19 +43,18 @@ def signup():
         }), 200
 
 
-@auth.route('/check_name/',methods=['POST'])
+@auth.route('/check_name/',methods=['GET'])
 def check_name2() :
     """检查用户名"""
-    un = request.get_json().get("username")
+    un = request.args.get("username")
     if User.query.filter_by(username=un).first() is not None :
-        return jsonify({ }) , 401
+        return jsonify({ }) , 400
     return jsonify({ }) , 200
 
-@auth.route('/check_email/',methods=['POST'])
-def check_name() :
+@auth.route('/check_email/',methods=['GET'])
+def check_email2() :
     """检查邮箱"""
-    email = request.get_json().get("email")
-    print email
+    email = request.args.get("email")
     if User.query.filter_by(email=email).first() is not None :
-        return jsonify({ }) , 402
+        return jsonify({ }) , 400
     return jsonify({ }) , 200

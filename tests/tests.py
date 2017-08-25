@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 import random
 from auth.models import User
 import json
+import base64
 TOKEN = str(0)
 TOKEN2 = str(0)
 TOKEN1 = str(0)
@@ -28,7 +29,7 @@ class BasicTestCase(unittest.TestCase) :
     def test_app_exist(self) :
         self.assertFalse(current_app is None)
 
-    def test_a_signup(self) :
+    def test_aa_signup(self) :
         response = self.client.post(
                     url_for('auth.signup',_external=True),
                     data = json.dumps({
@@ -38,11 +39,38 @@ class BasicTestCase(unittest.TestCase) :
                     content_type = 'application/json')
         self.assertTrue( response.status_code == 200 )
 
+    def test_aa_checkname(self) :
+        response = self.client.get(
+                    url_for('auth.check_name2',_external=True)+'?username='+str(number) ,
+                    content_type = 'application/json')
+        self.assertTrue( response.status_code == 200  )
+
+
+    def test_aa_checkemail(self) :
+        response = self.client.get(
+                    url_for('auth.check_email2',_external=True)+'?email='+str(number) ,
+                    content_type = 'application/json')
+        self.assertTrue( response.status_code == 200  )
+
+    def test_az_checkname(self) :
+        response = self.client.get(
+                    url_for('auth.check_name2',_external=True)+'?username='+str(number) ,
+                    content_type = 'application/json')
+        self.assertTrue( response.status_code == 400  )
+
+
+    def test_az_checkemail(self) :
+        response = self.client.get(
+                    url_for('auth.check_email2',_external=True)+'?email='+str(number) ,
+                    content_type = 'application/json')
+        self.assertTrue( response.status_code == 400  )
+
     def test_b_login(self) :
+        pwd = base64.b64encode(str(number))
         response = self.client.post(
                     url_for('auth.login',_external=True),
                     data = json.dumps({
-                        "password" : str(number) ,
+                        "password" : pwd ,
                         "username" : str(number)
                         }) ,
                     content_type = 'application/json'
