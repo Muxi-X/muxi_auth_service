@@ -10,6 +10,7 @@ Flask-PageDown==0.2.2
 Flask-Script==2.0.5
 Flask-SQLAlchemy==2.1
 Flask-WTF==0.13.1
+Flask-Mail
 html5lib==0.9999999
 itsdangerous==0.24
 Jinja2==2.8
@@ -26,3 +27,5 @@ gunicorn
 requests
 flask-debugtoolbar==0.10.1 
 flask-moment==0.5.1 
+celery
+redis

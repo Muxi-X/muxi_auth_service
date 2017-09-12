@@ -8,6 +8,7 @@ models.py
 
 from . import db, login_manager
 from itsdangerous import JSONWebSignatureSerializer as Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as TJSSerializer 
 from random import seed
 from flask import current_app, request, url_for
 from flask_login import UserMixin, current_user
@@ -86,6 +87,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(164))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     left = db.Column(db.Boolean)
+    reset_t = db.Column(db.String)
 
     info = db.Column(db.Text) # talk about yourself
     # url of your avatar (suggestion: upload to qiniu or imugur)
@@ -135,6 +137,25 @@ class User(db.Model, UserMixin):
             current_app.config['SECRET_KEY']
         )
         return s.dumps({'id': self.id})
+
+    def generate_reset_token(self, captcha):
+        s = TJSSerializer(current_app.config['SECRET_KEY'], expires_in=10*60)
+        data = {
+            'id': self.id,
+            'captcha': captcha
+        }
+        return s.dumps(data)
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = TJSSerializer(current_app.config['SECRET_KEY'], expires_in=10*60)
+        try:
+            data = s.loads(token)
+        except SignatureExpired, BadSignature:
+            return False
+        id = data.get('id') # id int
+        captcha = data.get('captcha')
+        return id, captcha
 
     @staticmethod
     def verify_auth_token(token):

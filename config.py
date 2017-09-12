@@ -32,6 +32,24 @@ class Config:
     SQLALCHEMY_RECORD_QUERIES = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
+    """mail configuration"""
+    MAIL_SERVER = 'smtp.qq.com'
+    MAIL_PORT = 25
+    MAIL_USE_TLS = True
+    MAIL_DEBUG = True 
+    MAIL_USERNAME = os.getenv('AUTH_MAIL_USERNAME')
+    MAIL_PASSWORD = os.getenv('AUTH_MAIL_PASSWORD')
+    MAIL_DEFAULT_SENDER = MAIL_USERNAME
+    AUTH_MAIL_SUBJECT_PREFIX = '[木犀团队]'
+    REDIS_BROKER_HOSTNAME = os.getenv('REDIS_BROKER_HOSTNAME') 
+    REDIS_BACKEND_HOSTNAME = os.getenv('REDIS_BACKEND_HOSTNAME') 
+    BROKER_PORT = os.getenv('BROKER_PORT') 
+    BACKEND_PORT = os.getenv('BACKEND_PORT')
+
+    """celery configuration""" 
+    CELERY_BROKER_URL = 'redis://' + (REDIS_BROKER_HOSTNAME or 'localhost') + ':' + (BROKER_PORT or '6379') + '/0' 
+    CELERY_RESULT_BACKEND = 'redis://' + (REDIS_BACKEND_HOSTNAME or 'localhost') + ':' +  (BACKEND_PORT or '6382') + '/0' 
+
     @staticmethod
     def init_app(app):
         pass
@@ -70,7 +88,6 @@ class TestingConfig(Config):
 # production configuration
 class ProductionConfig(Config):
     """production configuration"""
-    # SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, "data.sqlite")
     SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI" )
     
     @classmethod

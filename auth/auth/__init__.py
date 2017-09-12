@@ -5,4 +5,4 @@ auth = Blueprint(
         __name__ ,
 )
 
-from . import  login,  signup, profile
+from . import  login,  signup, profile, reset_password
