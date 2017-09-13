@@ -26,7 +26,7 @@ def send_mail(to, subject, template, **kwargs):
     """
     发送邮件
     """
-    res = send_async_email.delay(msg_dict(to, subject, template, **kwargs))
+    msg_dict(to, subject, template, **kwargs)
 
 
 @celery.task(default_retry_delay=15)
