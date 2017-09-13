@@ -8,7 +8,7 @@ models.py
 
 from . import db, login_manager
 from itsdangerous import JSONWebSignatureSerializer as Serializer
-from itsdangerous import TimedJSONWebSignatureSerializer as TJSSerializer 
+from itsdangerous import TimedJSONWebSignatureSerializer as TJSSerializer
 from random import seed
 from flask import current_app, request, url_for
 from flask_login import UserMixin, current_user
@@ -87,7 +87,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(164))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     left = db.Column(db.Boolean)
-    reset_t = db.Column(db.String)
+    reset_t = db.Column(db.String(164))
 
     info = db.Column(db.Text) # talk about yourself
     # url of your avatar (suggestion: upload to qiniu or imugur)
