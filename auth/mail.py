@@ -18,6 +18,7 @@ def msg_dict(to, subject, template, **kwargs):
     )
     msg.body = render_template(template + '.txt', **kwargs)
     msg.html = render_template(template + '.html', **kwargs)
+    mails.send(msg)
     return msg.__dict__
 
 
@@ -26,12 +27,11 @@ def send_mail(to, subject, template, **kwargs):
     发送邮件
     """
     res = send_async_email.delay(msg_dict(to, subject, template, **kwargs))
-    time.sleep(100)
-    print res.ready()
 
-@celery.task()
+
+@celery.task(default_retry_delay=15)
 def send_async_email(msg_dict):
-    with app.app_context():  
+    with app.app_context():
         """
         异步方法 
         """

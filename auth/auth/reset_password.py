@@ -20,7 +20,6 @@ def get_captcha():
     if user is None:
         return jsonify({}), 404
     captcha = '%04d' % random.randrange(0, 9999)
-    print captcha 
     send_mail(email, '木犀内网验证码', 'mail/reset', username=username, captcha=captcha)
     user.reset_t = user.generate_reset_token(captcha)
     return jsonify({}), 200
