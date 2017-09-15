@@ -8,8 +8,8 @@ auth:
         - "5499:5499" 
     volumes:
         - .:/Auth
-#   external_links:
-#       - auth-mysql:mysql 
+    external_links:
+        - auth-mysql:mysql 
     links:
         - redis1
         - redis2 
