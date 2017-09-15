@@ -1,9 +1,9 @@
-# coding: utf-8 
+# coding: utf-8
 
 import random
 from flask import request, jsonify
 from .. import db
-from . import auth 
+from . import auth
 from ..models import User
 from ..mail import send_mail
 
@@ -13,7 +13,7 @@ def get_captcha():
     """
     获取邮箱验证码
     """
-    username = request.get_json().get('username') 
+    username = request.get_json().get('username')
     email = request.get_json().get('email')
     user = User.query.filter_by(email=email).first()
 

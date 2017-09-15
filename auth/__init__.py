@@ -4,13 +4,13 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_debugtoolbar import DebugToolbarExtension
-from config import config
 from flask_moment import Moment
 import os
-from config import basedir
-from celery import Celery 
-from flask_mail import Mail 
-
+from celery import Celery
+from flask_mail import Mail
+import sys
+sys.path.append('..')
+from config import config, basedir
 
 """
 config
@@ -46,12 +46,12 @@ def create_app(config_name=None,main=True) :
 app = create_app(config_name = 'default')
 """
 celery config
-""" 
+"""
 celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'],backend=app.config['CELERY_RESULT_BACKEND'])
 
 """
 Mail
-""" 
+"""
 mails = Mail(app)
 
 from .auth import auth
