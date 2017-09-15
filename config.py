@@ -47,8 +47,8 @@ class Config:
     BACKEND_PORT = os.getenv('BACKEND_PORT')
 
     """celery configuration"""
-    CELERY_BROKER_URL = 'redis://' + (REDIS_BROKER_HOSTNAME or 'localhost') + ':' + (BROKER_PORT or '6379') + '/0'
-    CELERY_RESULT_BACKEND = 'redis://' + (REDIS_BACKEND_HOSTNAME or 'localhost') + ':' +  (BACKEND_PORT or '6382') + '/0'
+    CELERY_BROKER_URL = 'redis://{}:6385/1'.format(os.environ.get('REDIS_BROKER_HOSTNAME'))
+    CELERY_RESULT_BACKEND = 'redis://{}:6386/1'.format(os.environ.get('REDIS_BACKEND_HOSTNAME'))
 
 
     @staticmethod

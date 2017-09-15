@@ -8,5 +8,34 @@ auth:
         - "5499:5499" 
     volumes:
         - .:/Auth
-    external_links:
-        - auth-mysql:mysql 
+#   external_links:
+#       - auth-mysql:mysql 
+    links:
+        - redis1
+        - redis2 
+
+#-------------------- celery --------------------------
+celery:
+    build: .
+    env_file:
+        - Auth.env
+    command: celery worker -A auth.mail.celery --loglevel=INFO
+    volumes:
+        - .:/Auth
+    links:
+        - redis1
+        - redis2
+
+
+#------------------- redis servers---------------------
+redis1:
+    image: redis
+    command: redis-server --port 6385
+    ports:
+        - "6385:6385"
+
+redis2:
+    image: redis
+    command: redis-server --port 6386 # celery result backend
+    ports:
+        - "6386:6386"
