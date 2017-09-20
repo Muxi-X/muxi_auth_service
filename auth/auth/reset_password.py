@@ -13,14 +13,14 @@ def get_captcha():
     """
     获取邮箱验证码
     """
-    username = request.get_json().get('username')
+#   username = request.get_json().get('username')
     email = request.get_json().get('email')
     user = User.query.filter_by(email=email).first()
 
     if user is None:
         return jsonify({}), 404
     captcha = '%04d' % random.randrange(0, 9999)
-    send_mail(email, '木犀内网验证码', 'mail/reset', username=username, captcha=captcha)
+    send_mail(email, '木犀内网验证码', 'mail/reset', captcha=captcha)
     user.reset_t = user.generate_reset_token(captcha)
     return jsonify({}), 200
 
