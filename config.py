@@ -43,8 +43,6 @@ class Config:
     AUTH_MAIL_SUBJECT_PREFIX = '[木犀团队]'
     REDIS_BROKER_HOSTNAME = os.getenv('REDIS_BROKER_HOSTNAME')
     REDIS_BACKEND_HOSTNAME = os.getenv('REDIS_BACKEND_HOSTNAME')
-    BROKER_PORT = os.getenv('BROKER_PORT')
-    BACKEND_PORT = os.getenv('BACKEND_PORT')
 
     """celery configuration"""
     CELERY_BROKER_URL = 'redis://{}:6385/1'.format(os.environ.get('REDIS_BROKER_HOSTNAME'))
