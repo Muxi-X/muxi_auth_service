@@ -55,5 +55,5 @@ Mail
 mails = Mail(app)
 
 from .auth import auth
-app.register_blueprint(auth)
+app.register_blueprint(auth,url_prefix="/api")
 
