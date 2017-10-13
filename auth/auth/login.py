@@ -18,13 +18,13 @@ import base64
 def login():
     username = request.get_json().get("username")
     pwd = request.get_json().get("password")
-    try : 
+    try :
         pwd = base64.b64decode(pwd)
         pwd = unicode(pwd)
-    except : 
-        return jsonify({ }) , 401 
+    except :
+        return jsonify({ }) , 401
     if not username  :
-        return jsonify({}) , 40
+        return jsonify({}) , 404
     user = User.query.filter_by(username=username).first()
     if not user:
         return jsonify({}), 401
