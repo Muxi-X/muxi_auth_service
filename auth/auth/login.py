@@ -24,7 +24,7 @@ def login():
     except :
         return jsonify({ }) , 401
     if not username  :
-        return jsonify({}) , 404
+        return jsonify({}) , 401
     user = User.query.filter_by(username=username).first()
     if not user:
         return jsonify({}), 401
