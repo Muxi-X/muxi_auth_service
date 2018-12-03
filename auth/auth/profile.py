@@ -65,3 +65,20 @@ def edit_profile():
     return jsonify({
             'changed' : ID ,
         }) , 200
+
+
+@auth.route('/email/',methods=['GET'])
+def get_email2():
+    """
+    通过用户名获取邮箱
+    """
+    username = request.args.get('username')
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        return jsonify({
+                "msg" : "用户不存在",
+            }), 404
+
+    return jsonify({
+            "email" : user.email,
+        }), 200
