@@ -27,9 +27,8 @@ def login():
         return jsonify({}) , 401
     user = User.query.filter_by(username=username).first()
     if not user:
-        try:
-            user = User.query.filter_by(email=username).first()
-        except:
+        user = User.query.filter_by(email=username).first()
+        if not user:
             return jsonify({}), 401
     if not user.verify_password(pwd):
         return jsonify({}), 400
