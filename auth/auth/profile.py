@@ -74,10 +74,10 @@ def get_email2():
     """
     username = request.args.get('username')
     user = User.query.filter_by(username=username).first()
-    if user is None:
-        return jsonify({
-                "msg" : "用户不存在",
-            }), 404
+    if not user:
+        user = User.query.filter_by(email=username).first()
+        if not user:
+            return jsonify({}), 404
 
     return jsonify({
             "email" : user.email,
