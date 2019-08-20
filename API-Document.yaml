@@ -14,6 +14,8 @@ basePath: "/api/auth"
 tags:
 - name: "auth"
   description: "auth API"
+- name: "profile"
+  description: "profile API"
 schemes:
 - "https"
 - "http"
@@ -225,6 +227,63 @@ paths:
           description: "Bad Request"
         404:
           description: "User not found."
+  /show_profile/{id}:
+    get:
+      tags:
+      - "profile"
+      summary: "Get user's profile information."
+      description: "Get user's profile information need token and user id. Please make sure userID in path and token in header."
+      operationId: "profile-get"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "header"
+        name: "token"
+        description: "Token is login required."
+        required: true
+        type: "string"
+      - in: "path"
+        name: "id"
+        description: "The user id, as same as user id in token."
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Profile"
+  /edit_profile:
+    post:
+      tags:
+      - "profile"
+      summary: "Edit user's profile information."
+      description: "Edit user's profile information need token in header."
+      operationId: "profile-edit"
+      consumes:
+      - "application/json"
+      produces:
+      - "application"
+      parameters:
+      - in: "header"
+        name: "token"
+        description: "Token is login required."
+        required: true
+        type: string
+      - in: "body"
+        name: "body"
+        description: "The new profile information."
+        required: true
+        schema:
+          $ref: "#/definitions/Profile"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            required:
+            - "changed"
+            properties:
+              changed:
+                type: "integer"
 definitions:
   UserSignup:
     type: "object"
@@ -289,3 +348,63 @@ definitions:
         example: "muxistudio@qq.com"
       new_password:
         type: "string"
+  Profile:
+    type: "object"
+    required:
+    - "email"
+    - "birthday"
+    - "hometown"
+    - "group"
+    - "timejoin"
+    - "timeleft"
+    - "username"
+    - "info"
+    - "avatar_url"
+    - "personal_blog"
+    - "github"
+    - "flickr"
+    - "weibo"
+    - "zhihu"
+    properties:
+      email:
+        type: "string"
+        format: "email"
+        example: "muxistudio@qq.com"
+      birthday:
+        type: "string"
+        format: "date"
+      hometown:
+        type: "string"
+        example: "湖北-武汉"
+      group:
+        type: "string"
+        example: "Backend"
+      timejoin:
+        type: "string"
+        format: "date"
+      timeleft:
+        type: "string"
+        format: "date"
+      username:
+        type: "string"
+      info:
+        type: "string"
+        format: "text"
+      avatar_url:
+        type: "string"
+        format: "url"
+      personal_blog:
+        type: "string"
+        format: "url"
+      github:
+        type: "string"
+        format: "url"
+      flickr:
+        type: "string"
+        format: "url"
+      weibo:
+        type: "string"
+        format: "url"
+      zhihu:
+        type: "string"
+        format: "url"
